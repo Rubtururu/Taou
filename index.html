@@ -20,25 +20,35 @@
             color: white;
         }
 
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
         .container {
-            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100%;
-            z-index: 2;
-            text-align: center;
         }
 
         .card {
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.6);
             border-radius: 15px;
             padding: 40px;
-            width: 80%;
-            max-width: 500px;
+            max-width: 600px;
+            text-align: center;
             backdrop-filter: blur(5px);
-            animation: cardEntrance 1s ease-out;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
         .card h1 {
@@ -70,101 +80,26 @@
             font-size: 1.2em;
         }
 
-        @keyframes gradientAnimation {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        @keyframes cardEntrance {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
         /* Corazones flotantes */
         .heart {
             position: absolute;
+            width: 20px;
+            height: 20px;
             background-color: #ff6b81;
-            width: 40px;
-            height: 40px;
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            animation: floatHearts 10s ease-in-out infinite;
-            opacity: 0.8;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: floatHearts 5s linear infinite;
+            opacity: 0.7;
         }
 
         @keyframes floatHearts {
             0% {
-                transform: translate(0, 0);
-            }
-            50% {
-                transform: translate(150px, -200px);
+                transform: translateY(0) scale(1);
+                opacity: 0.7;
             }
             100% {
-                transform: translate(0, 0);
+                transform: translateY(-800px) scale(0.5);
+                opacity: 0.3;
             }
-        }
-
-        /* Estilos para partículas animadas */
-        .particle {
-            position: absolute;
-            background-color: #ffeaa7;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            animation: particleEffect 1.5s ease-in-out infinite;
-        }
-
-        @keyframes particleEffect {
-            0% {
-                opacity: 1;
-                transform: translate(0, 0);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(100px, 100px);
-            }
-        }
-
-        /* Efectos para el botón */
-        .button-effect {
-            position: relative;
-            display: inline-block;
-            overflow: hidden;
-        }
-
-        .button-effect::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-            background-color: #e74c3c;
-            transition: all 0.4s ease;
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            z-index: 1;
-        }
-
-        .button-effect:hover::before {
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .button-effect span {
-            position: relative;
-            z-index: 2;
         }
 
     </style>
@@ -173,14 +108,11 @@
     <div class="container">
         <div class="card">
             <h1>Para Taou ❤️</h1>
-            <p>Nuestra amistad lleva 1 año y 3 meses, esto es para toda la vida, y este verano nos veremos en Marrakech. No puedo esperar para vivir esa experiencia contigo.
-
-Hemos compartido risas, juegos en la Play, películas y muchísimas llamadas. Aunque aún no nos hemos visto en persona, siento que te conozco desde siempre.</p>
-            <div class="button-effect">
-                <button onclick="showMessage()">Ver Mensaje Especial</button>
-            </div>
+            <p>Nuestra amistad lleva 1 año y 3 meses, esto es para toda la vida, y este verano nos veremos en Marrakech. No puedo esperar para vivir esa experiencia contigo.</p>
+            <p>Hemos compartido risas, juegos en la Play, películas y muchísimas llamadas. Aunque aún no nos hemos visto en persona, siento que te conozco desde siempre.</p>
+            <button onclick="showMessage()">Ver Mensaje Especial</button>
             <div id="specialMessage">
-                <p>Gracias por ser mi mejor amiga, por estar siempre ahí, por cada risa y cada momento compartido. No puedo esperar para verte en persona y seguir creando recuerdos inolvidables. ❤ ❤️</p>
+                <p>Gracias por ser mi mejor amiga, por estar siempre ahí, por cada risa y cada momento compartido. No puedo esperar para verte en persona y seguir creando recuerdos inolvidables. ❤️</p>
             </div>
         </div>
     </div>
@@ -191,38 +123,17 @@ Hemos compartido risas, juegos en la Play, películas y muchísimas llamadas. Au
         }
 
         window.onload = function() {
-            const startDate = new Date(2024, 2, 12); // Fecha de inicio de la amistad
-            const now = new Date();
-            const diff = now - startDate;
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById('timeCounter').innerText = days;
-
-            // Crear corazones flotantes
             createHearts();
-
-            // Crear partículas animadas
-            createParticles();
         };
 
         function createHearts() {
-            const container = document.querySelector('body');
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 50; i++) {
                 const heart = document.createElement('div');
                 heart.classList.add('heart');
                 heart.style.left = Math.random() * window.innerWidth + 'px';
-                heart.style.top = Math.random() * window.innerHeight + 'px';
-                container.appendChild(heart);
-            }
-        }
-
-        function createParticles() {
-            const container = document.querySelector('body');
-            for (let i = 0; i < 15; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                particle.style.left = Math.random() * window.innerWidth + 'px';
-                particle.style.top = Math.random() * window.innerHeight + 'px';
-                container.appendChild(particle);
+                heart.style.bottom = -Math.random() * 100 + 'px';
+                heart.style.animationDuration = 5 + Math.random() * 5 + 's';
+                document.body.appendChild(heart);
             }
         }
     </script>
