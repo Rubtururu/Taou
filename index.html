@@ -1,4 +1,4 @@
-""<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,20 +6,16 @@
     <title>Para Taou - De tu mejor amigo Rubén</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
-        
+
         body {
             margin: 0;
             overflow: hidden;
             font-family: 'Poppins', sans-serif;
-            background: radial-gradient(circle, #0a0e27, #000000);
+            background: url('https://source.unsplash.com/1600x900/?space,stars') no-repeat center center fixed;
+            background-size: cover;
             color: white;
         }
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 0;
-        }
+
         .container {
             position: relative;
             z-index: 2;
@@ -28,17 +24,22 @@
             align-items: center;
             height: 100vh;
         }
+
         .card {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.7);
             border-radius: 15px;
             padding: 30px;
             text-align: center;
             backdrop-filter: blur(5px);
             animation: fadeIn 2s ease-in-out;
+            max-width: 600px;
+            width: 80%;
         }
+
         .card h1 {
             color: #ff7675;
         }
+
         button {
             background-color: #ff7675;
             color: white;
@@ -49,24 +50,20 @@
             margin-top: 15px;
             transition: background-color 0.3s;
         }
+
         button:hover {
             background-color: #d63031;
         }
+
         #specialMessage {
             margin-top: 20px;
             animation: slideDown 1s forwards;
         }
+
         .hidden {
             display: none;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideDown {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
+
         .soulmates {
             position: absolute;
             top: 20px;
@@ -77,6 +74,7 @@
             animation: pulse 1.5s infinite;
             z-index: 3;
         }
+
         @keyframes pulse {
             0%, 100% {
                 transform: scale(1);
@@ -85,11 +83,59 @@
                 transform: scale(1.1);
             }
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Corazones flotando */
+        .heart {
+            position: absolute;
+            animation: floatHearts 10s ease-in-out infinite;
+            z-index: 5;
+            opacity: 0.7;
+        }
+
+        @keyframes floatHearts {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(100px, -100px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        .particle {
+            position: absolute;
+            background-color: #ff6b81;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: moveParticle 2s ease-in-out infinite;
+        }
+
+        @keyframes moveParticle {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(200px, 200px);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="soulmates">Taou y Rubén - Los Soulmates ✨</div>
-    <canvas id="universe"></canvas>
     <div class="container">
         <div class="card">
             <h1>Para Taou ❤️</h1>
@@ -114,41 +160,32 @@
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             document.getElementById('timeCounter').innerText = days + " días";
 
-            const canvas = document.getElementById('universe');
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            const stars = Array(200).fill().map(() => ({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 2 + 1,
-                speed: Math.random() * 0.5 + 0.2
-            }));
-
-            function drawStars() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                stars.forEach(star => {
-                    ctx.beginPath();
-                    ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-                    ctx.fillStyle = "#ffffff";
-                    ctx.fill();
-                    star.y += star.speed;
-                    if (star.y > canvas.height) star.y = -star.size;
-                });
-                requestAnimationFrame(drawStars);
-            }
-
-            drawStars();
-
-            canvas.addEventListener('mousemove', (e) => {
-                ctx.beginPath();
-                ctx.arc(e.clientX, e.clientY, 3, 0, Math.PI * 2);
-                ctx.fillStyle = "#ff6b81";
-                ctx.fill();
-            });
+            createHearts();
+            createParticles();
         };
+
+        function createHearts() {
+            const container = document.querySelector('body');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('img');
+                heart.src = 'https://img.icons8.com/emoji/48/000000/red-heart.png';
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                container.appendChild(heart);
+            }
+        }
+
+        function createParticles() {
+            const container = document.querySelector('body');
+            for (let i = 0; i < 10; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = Math.random() * window.innerWidth + 'px';
+                particle.style.top = Math.random() * window.innerHeight + 'px';
+                container.appendChild(particle);
+            }
+        }
     </script>
 </body>
 </html>
-""
