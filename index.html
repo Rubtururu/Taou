@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,99 +7,101 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
 
+        /* Estilos globales */
         body {
             margin: 0;
-            overflow: hidden;
+            padding: 0;
             font-family: 'Poppins', sans-serif;
-            background: url('https://images.unsplash.com/photo-1485892098877-f3068db18cc5?crop=entropy&cs=tinysrgb&fit=max&ixid=MnwzNjUyOXwwfDF8c2VhY3JlfDJ8fGZvc3RlcnxlbnwwfHx8fDE2NzQyMjkxOTI&ixlib=rb-1.2.1&q=80&w=1080') no-repeat center center fixed;
-            background-size: cover;
+            background: linear-gradient(45deg, #ff6b81, #f39c12, #8e44ad, #3498db);
+            background-size: 400% 400%;
+            animation: gradientAnimation 8s ease infinite;
+            height: 100vh;
+            overflow: hidden;
             color: white;
         }
 
         .container {
             position: relative;
-            z-index: 2;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 100%;
+            z-index: 2;
+            text-align: center;
         }
 
         .card {
             background-color: rgba(0, 0, 0, 0.7);
             border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            backdrop-filter: blur(5px);
-            animation: fadeIn 2s ease-in-out;
-            max-width: 600px;
+            padding: 40px;
             width: 80%;
+            max-width: 500px;
+            backdrop-filter: blur(5px);
+            animation: cardEntrance 1s ease-out;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
         }
 
         .card h1 {
             color: #ff7675;
+            font-size: 3em;
+            letter-spacing: 2px;
         }
 
         button {
             background-color: #ff7675;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 15px 25px;
+            border-radius: 10px;
             cursor: pointer;
-            margin-top: 15px;
-            transition: background-color 0.3s;
+            margin-top: 20px;
+            transition: transform 0.3s, background-color 0.3s;
+            font-size: 1.2em;
         }
 
         button:hover {
-            background-color: #d63031;
+            background-color: #e74c3c;
+            transform: scale(1.1);
         }
 
         #specialMessage {
             margin-top: 20px;
-            animation: slideDown 1s forwards;
-        }
-
-        .hidden {
             display: none;
+            font-size: 1.2em;
         }
 
-        .soulmates {
-            position: absolute;
-            top: 20px;
-            width: 100%;
-            text-align: center;
-            font-size: 1.5em;
-            color: #ffeaa7;
-            animation: pulse 1.5s infinite;
-            z-index: 3;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
             }
             50% {
-                transform: scale(1.1);
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
             }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes cardEntrance {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
-        @keyframes slideDown {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* Corazones flotando */
+        /* Corazones flotantes */
         .heart {
             position: absolute;
+            background-color: #ff6b81;
+            width: 40px;
+            height: 40px;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
             animation: floatHearts 10s ease-in-out infinite;
-            z-index: 5;
-            opacity: 0.7;
+            opacity: 0.8;
         }
 
         @keyframes floatHearts {
@@ -107,60 +109,96 @@
                 transform: translate(0, 0);
             }
             50% {
-                transform: translate(100px, -100px);
+                transform: translate(150px, -200px);
             }
             100% {
                 transform: translate(0, 0);
             }
         }
 
+        /* Estilos para partículas animadas */
         .particle {
             position: absolute;
-            background-color: #ff6b81;
+            background-color: #ffeaa7;
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            animation: moveParticle 2s ease-in-out infinite;
+            animation: particleEffect 1.5s ease-in-out infinite;
         }
 
-        @keyframes moveParticle {
+        @keyframes particleEffect {
             0% {
+                opacity: 1;
                 transform: translate(0, 0);
             }
             100% {
-                transform: translate(200px, 200px);
                 opacity: 0;
+                transform: translate(100px, 100px);
             }
         }
+
+        /* Efectos para el botón */
+        .button-effect {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .button-effect::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background-color: #e74c3c;
+            transition: all 0.4s ease;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: 1;
+        }
+
+        .button-effect:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .button-effect span {
+            position: relative;
+            z-index: 2;
+        }
+
     </style>
 </head>
 <body>
-    <div class="soulmates">Taou y Rubén - Los Soulmates ✨</div>
     <div class="container">
         <div class="card">
             <h1>Para Taou ❤️</h1>
-            <p>Nuestra amistad lleva 1 año y 3 meses, esto es para toda la vida, y este verano nos veremos en Marrakech. No puedo esperar para vivir esa experiencia contigo.</p>
-            <p>Hemos compartido risas, juegos en la Play, películas y muchísimas llamadas. Aunque aún no nos hemos visto en persona, siento que te conozco desde siempre.</p>
-            <button onclick="showMessage()">Ver Mensaje Especial</button>
-            <div id="specialMessage" class="hidden">
-                <p>Gracias por ser mi mejor amiga, por estar siempre ahí, por cada risa y cada momento compartido. No puedo esperar para verte en persona y seguir creando recuerdos inolvidables. ❤️</p>
+            <p>Desde hace <span id="timeCounter"></span> días, hemos compartido risas, juegos y momentos inolvidables. Este verano, ¡por fin nos veremos en Marrakech!</p>
+            <div class="button-effect">
+                <button onclick="showMessage()">Ver Mensaje Especial</button>
+            </div>
+            <div id="specialMessage">
+                <p>Gracias por ser mi mejor amiga. ¡No puedo esperar para vernos y seguir creando recuerdos maravillosos! ❤️</p>
             </div>
         </div>
     </div>
 
     <script>
         function showMessage() {
-            document.getElementById('specialMessage').classList.toggle('hidden');
+            document.getElementById('specialMessage').style.display = 'block';
         }
 
         window.onload = function() {
-            const startDate = new Date(2024, 2, 12); 
+            const startDate = new Date(2024, 2, 12); // Fecha de inicio de la amistad
             const now = new Date();
             const diff = now - startDate;
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById('timeCounter').innerText = days + " días";
+            document.getElementById('timeCounter').innerText = days;
 
+            // Crear corazones flotantes
             createHearts();
+
+            // Crear partículas animadas
             createParticles();
         };
 
@@ -168,21 +206,16 @@
             const container = document.querySelector('body');
             for (let i = 0; i < 20; i++) {
                 const heart = document.createElement('div');
-                heart.style.width = '50px';
-                heart.style.height = '50px';
-                heart.style.backgroundColor = 'red';
-                heart.style.position = 'absolute';
+                heart.classList.add('heart');
                 heart.style.left = Math.random() * window.innerWidth + 'px';
                 heart.style.top = Math.random() * window.innerHeight + 'px';
-                heart.style.clipPath = 'polygon(50% 0%, 0% 100%, 100% 100%)';
-                heart.classList.add('heart');
                 container.appendChild(heart);
             }
         }
 
         function createParticles() {
             const container = document.querySelector('body');
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 15; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 particle.style.left = Math.random() * window.innerWidth + 'px';
